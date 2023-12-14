@@ -110,7 +110,7 @@ with st.container():
 
 # Section 4: Competition Analysis
 with st.container():
-    st.header("3. Market Competition Analysis")
+    st.header("4. Market Competition Analysis")
     # df = display_multiple_plots()
     df.index = pd.to_datetime(df.index, unit="ms")
     st.line_chart(df)
@@ -416,3 +416,22 @@ with st.container():
     image_path_volume = "Images/earnings_2023.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+
+
+# Section 5: Social Media Analysis
+with st.container():
+    st.header("5. Social Media Analysis")
+    # Additional analysis or features can be added here
+    st.markdown(
+        """
+    Social media analysis serve as a reflection of the community's sentiment towards the cryptocurrency. It helps in understanding the price volatalities and potential market movements. In this section, we will be relying on the data provided by _Coinbase_ which obtains the data from a paid social media analysis tool called _LunarCRUSH_.
+    
+    According to _Coinbase_
+    - 152 individuals are sharing 157 posts about Decentraland MANA on Twitter and Reddit combined in last 24 hours.
+    - It ranks 232 in terms of the mentions and activity on Twitter.
+    - Based on 220 tweets about Decentraland MANA:
+        - 5.45 show bullish sentiment
+        - 10.45 show bearish sentiment
+        - 84.09 show neutral sentiment
+    """
+    )
