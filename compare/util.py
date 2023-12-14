@@ -5,14 +5,14 @@ all_dfs = []
 
 tokens = {
     "apecoin-ape": {
-        "include": True,
+        "include": False,
         "symbol": "APE",
         "name": "ApeCoin",
         "ranknow": 87,
         "file_path": "raw_data\ApeCoin_12_13_2019-12_14_2023_historical_data_coinmarketcap.csv",
     },
     "internet-computer": {
-        "include": True,
+        "include": False,
         "symbol": "ICP",
         "name": "Internet Computer",
         "ranknow": 28,
@@ -129,4 +129,4 @@ for k, v in tokens.items():
 combined_df = pd.concat(all_dfs, ignore_index=True)
 
 # Save the combined DataFrame to a CSV file
-combined_df.to_csv("modified\eight_comparison_data.csv", index=False)
+combined_df.to_csv("modified\imp6_comparison_data.csv", index=False)
