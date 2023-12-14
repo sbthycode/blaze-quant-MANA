@@ -17,17 +17,6 @@ def fetch_data(coin="decentraland"):
     return pd.DataFrame(prices, columns=["Date", "Price"]).set_index("Date")
 
 
-# Function to fetch Ethereum price data
-def fetch_data(coin="decentraland"):
-    end_date = datetime.now()
-    start_date = end_date - timedelta(days=730)  # Last two years
-    url = f"https://api.coingecko.com/api/v3/coins/{coin}/market_chart/range?vs_currency=usd&from={start_date.timestamp()}&to={end_date.timestamp()}"
-    response = requests.get(url)
-    data = response.json()
-    prices = data["prices"]
-    return pd.DataFrame(prices, columns=["Date", "Price"]).set_index("Date")
-
-
 def display_multiple_plots():
     st.title("Cryptocurrency Price Comparison")
     selected_coins = st.multiselect("Select Cryptocurrencies", ["ethereum", "bitcoin"])
@@ -36,7 +25,6 @@ def display_multiple_plots():
         st.warning("Please select at least one cryptocurrency.")
         return
 
-    # Define a list of colors for each selected coin
     coin_colors = {
         "ethereum": "blue",
         "bitcoin": "orange",
@@ -88,6 +76,21 @@ with st.container():
         </div>
     """,
         unsafe_allow_html=True,
+    )
+    st.markdown(
+        """
+    
+    ### Whitepaper Analysis
+    
+    Decentraland is an Ethereum-based virtual ecosystem. It has revolutionized the digital landscape by offering users the ability to buy and sell digital properties, engage in games, trade collectibles, and participate in social interactions within a shared virtual world. Decentraland is Governed by three distinctive tokens – MANA, LAND, and Estate. Decentraland operates on a decentralized model, allowing users to create DAOs through the Argon software on the Ethereum blockchain.
+
+    Originating in 2015 and officially launched in 2017, Decentraland gained prominence in 2021 as the cryptocurrency market and NFTs surged in popularity. The MANA tokens, initially priced at 0.02 USD, saw a substantial increase, reaching values between $6000 and $100,000 per parcel. Notably, major brands like Samsung, Adidas, Atari, and Miller Lite joined the platform, acquiring virtual "properties."
+    
+    Decentraland's architecture revolves around three key concepts: The World, consisting of 3D units called Parcels; The District, formed through DAO voting; and The Marketplace, the hub of Decentraland's economy. The technical aspects involve three layers – Consensus, Assets, and Real-time – ensuring efficient operation of the decentralized virtual space.
+    
+    Tokenomics in Decentraland involve two distinct tokens: LAND, necessary for purchasing parcels, and MANA, an ERC20 token serving as a governance token. The project faces competition from platforms like The Sandbox, Rarible, Vault Hill, and Odyssey, each offering unique features within the blockchain and metaverse spaces.
+
+    """
     )
 
 # Section 3: Price-related Analysis
@@ -350,6 +353,8 @@ with st.container():
 
         """
     )
+
+    st.write("*source: AnalyticsInsight*")
 
     st.markdown(
         """
