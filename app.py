@@ -90,6 +90,7 @@ with st.container():
     
     Tokenomics in Decentraland involve two distinct tokens: LAND, necessary for purchasing parcels, and MANA, an ERC20 token serving as a governance token. The project faces competition from platforms like The Sandbox, Rarible, Vault Hill, and Odyssey, each offering unique features within the blockchain and metaverse spaces.
 
+    *Source: [Decentraland Whitepaper](https://decentraland.org/whitepaper.pdf)*
     """
     )
 
@@ -112,7 +113,7 @@ with st.container():
 with st.container():
     st.header("4. Market Competition Analysis")
     # df = display_multiple_plots()
-    df.index = pd.to_datetime(df.index, unit="ms")
+    # df.index = pd.to_datetime(df.index, unit="ms")
     st.line_chart(df)
 
     # Additional analysis or features can be added here
@@ -145,7 +146,7 @@ with st.container():
     - Theta aims to decentralize video streaming, operating a peer-to-peer video delivery network. The company’s promises are like many metaverse business plans: reduce costs, transfer power from companies to the masses and eliminate intermediaries. 
     - According to Theta, this vision would give a bigger piece of the pie to content creators and make video cheaper for consumers.
     
-    *Data source: Coinbase, Forbes*
+    *Source: [Coinbase](https://coinmarketcap.com/currencies/decentraland/historical-data/), [Forbes](https://www.forbes.com/advisor/in/investing/cryptocurrency/top-metaverse-coins/)*
     
     In this section, we will be comparing the Decentraland MANA token with these 5 competitors. We will be comparing the price, market capitalization, and trading volume of these tokens. We will also perform some experiments to analyse the correlation and return on investmen between these tokens.
     """
@@ -176,7 +177,30 @@ with st.container():
     # col2.markdown(metric)
     st.markdown(metric)
 
-    st.write("*Data source: CoinMarketCap*")
+    st.write(
+        "*Data source: [CoinMarketCap](https://coinmarketcap.com/currencies/decentraland/)*"
+    )
+    st.markdown("---")
+
+    st.markdown("### Correlation between the currencies")
+    image_path_cap = "Images/correlation.png"
+    image_cap = Image.open(image_path_cap)
+    st.image(image_cap)
+    st.markdown(
+        """
+        - In the correlation plot above, we can use these rules to get an idea of the interdependence between various currencies:
+            - Darker colors indicate stronger correlations, while lighter colors indicate weaker correlations.
+            - Positive correlations (when one variable increases, the other variable tends to increase) represented by warm colors.
+            - Negative correlations (when one variable increases, the other variable tends to decrease) represented by cool colors.
+        
+        
+        - From the correlation plot, we observe that the correlation between MANA and SAND is __0.94__ which is very high. This is due to the fact that both the tokens have similar use-case and are direct competitors.
+        
+        - Except for Theta Network, all the other tokens have a correlation of more than __0.8__ with MANA. This is due to the fact that all the tokens are competitors and have similar use-case.
+        
+        Using these correlation values of Decentraland MANA and their effects, we have analyzed the trends between the currencies with respect to market cap, transaction volume and price.
+        """
+    )
 
     col1, col2 = st.columns(2)
     col1.markdown("**Currencies by Market Capitalization:**")
@@ -187,6 +211,7 @@ with st.container():
     image_path_volume = "Images/currencies_by_transactin_volume.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+    st.markdown("---")
 
     st.markdown(
         """
@@ -212,6 +237,7 @@ with st.container():
     image_path_volume = "Images/market_cap_per_curr_stream.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+    st.markdown("---")
 
     st.markdown(
         """
@@ -237,6 +263,7 @@ with st.container():
     image_path_volume = "Images/trans_volume_per_curr_stream.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+    st.markdown("---")
 
     st.markdown(
         """
@@ -262,7 +289,7 @@ with st.container():
     image_path_volume = "Images/price_per_unit_curr_stream.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
-
+    st.markdown("---")
     st.subheader("Competition in 2023")
     st.markdown(
         """
@@ -273,7 +300,7 @@ with st.container():
 
     st.markdown(
         """
-        ### Market Cap
+        ### Market Cap in 2023
         
         - Decentraland MANA ranks at around 4th position in terms of market cap in 2023. MANA's ATH is 0.5 times the ATH of Theta Network.
         - All tokens saw an increase in market cap in last three months of 2023. This is due to the fact that the crypto market is growing and more and more people are investing in crypto.
@@ -292,10 +319,11 @@ with st.container():
     image_path_volume = "Images/market_cap_per_curr_2023_stream.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+    st.markdown("---")
 
     st.markdown(
         """
-        ### Transaction Volume
+        ### Transaction Volume in 2023
         
         - Decentraland MANA ranks at around 3rd or 4th position in terms of market cap in 2023. MANA observed a decrease in the first half of 2023 and then an increase in the second half of 2023.
         - From the stream plot, The Sandbox performed better than Decentraland MANA in 2023 consistently having around 1.5 times the transaction volume of MANA.
@@ -314,10 +342,11 @@ with st.container():
     image_path_volume = "Images/transact_volume_per_curr_2023_stream.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+    st.markdown("---")
 
     st.markdown(
         """
-        ### Price
+        ### Price in 2023
         
         - Excluding ILV, Decentraland MANA ranks at around 2nd position in terms of market cap in 2023. MANA observed a lower price in the end of 2023 as compared to the start of 2023.
         - The latest price of Decentraland MANA is around 0.5 USD as compred to ILV which is around 100 USD. All the other tokens are in price range similar to MANA.
@@ -336,6 +365,7 @@ with st.container():
     image_path_volume = "Images/price_per_unit_curr_2023_stream.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+    st.markdown("---")
 
     st.markdown(
         """
@@ -354,28 +384,10 @@ with st.container():
         """
     )
 
-    st.write("*source: AnalyticsInsight*")
-
-    st.markdown(
-        """
-        ### Correlation between the currencies
-        
-        - In the correlation plot below, we can use these rules to get an idea of the interdependence between various currencies:
-            - Darker colors indicate stronger correlations, while lighter colors indicate weaker correlations.
-            - Positive correlations (when one variable increases, the other variable tends to increase) represented by warm colors.
-            - Negative correlations (when one variable increases, the other variable tends to decrease) represented by cool colors.
-        
-        
-        - From the correlation plot, we observe that the correlation between MANA and SAND is __0.94__ which is very high. This is due to the fact that both the tokens have similar use-case and are direct competitors.
-        
-        - Except for Theta Network, all the other tokens have a correlation of more than __0.8__ with MANA. This is due to the fact that all the tokens are competitors and have similar use-case.
-        
-        """
+    st.write(
+        "*Source: [AnalyticsInsight](https://analyticsinsight.net/next-cryptocurrency-to-explode-in-2023-which-coins-will-blow-up/)*"
     )
-    st.markdown("**Correlation between the currencies**")
-    image_path_cap = "Images/correlation.png"
-    image_cap = Image.open(image_path_cap)
-    st.image(image_cap)
+    st.markdown("---")
 
     st.markdown(
         """
@@ -416,6 +428,7 @@ with st.container():
     image_path_volume = "Images/earnings_2023.png"
     image_volume = Image.open(image_path_volume)
     col2.image(image_volume)
+    st.markdown("---")
 
 
 # Section 5: Social Media Analysis
@@ -433,5 +446,7 @@ with st.container():
         - 5.45 show bullish sentiment
         - 10.45 show bearish sentiment
         - 84.09 show neutral sentiment
+        
+    *Source: [Coinbase](https://www.coinbase.com/price/decentraland#SocialMediaMetricsSection)*
     """
     )
