@@ -6,51 +6,6 @@ import altair as alt
 from PIL import Image
 
 
-# Function to fetch Ethereum price data
-def fetch_data(coin="decentraland"):
-    end_date = datetime.now()
-    start_date = end_date - timedelta(days=730)  # Last two years
-    url = f"https://api.coingecko.com/api/v3/coins/{coin}/market_chart/range?vs_currency=usd&from={start_date.timestamp()}&to={end_date.timestamp()}"
-    response = requests.get(url)
-    data = response.json()
-    prices = data["prices"]
-    return pd.DataFrame(prices, columns=["Date", "Price"]).set_index("Date")
-
-
-def display_multiple_plots():
-    st.title("Cryptocurrency Price Comparison")
-    selected_coins = st.multiselect("Select Cryptocurrencies", ["ethereum", "bitcoin"])
-    selected_coins.append("decentraland")
-    if not selected_coins:
-        st.warning("Please select at least one cryptocurrency.")
-        return
-
-    coin_colors = {
-        "ethereum": "blue",
-        "bitcoin": "orange",
-        "decentraland": "green",
-    }
-
-    charts = []
-    for coin in selected_coins:
-        data = fetch_data(coin)
-        chart = (
-            alt.Chart(data.reset_index())
-            .mark_line()
-            .encode(
-                x="Date:T",
-                y="Price:Q",
-                color=alt.value(coin_colors[coin]),
-                tooltip=["Date:T", "Price:Q"],
-            )
-            .properties(title=f"{coin.capitalize()} Price Over Time")
-        )
-
-        charts.append(chart)
-    combined_chart = alt.layer(*charts).resolve_scale(y="independent")
-    st.altair_chart(combined_chart, use_container_width=True)
-
-
 # Set background to light
 st.set_page_config(layout="wide")
 st.title("Decentraland (MANA) Price Analysis")
@@ -58,37 +13,20 @@ st.title("Decentraland (MANA) Price Analysis")
 # Section 1: Introduction to Decentraland
 with st.container():
     st.header("1. Introduction to Decentraland")
-    st.write(
-        """
-    Decentraland is a virtual reality platform powered by the Ethereum blockchain.
-    It allows users to create, experience, and monetize content and applications.
-    """
-    )
-
-# Section 2: Initial Analysis and Tokenomics (Orange background)
-with st.container():
-    st.header("2. Initial Analysis and Tokenomics")
-    st.markdown(
-        """
-        <div style="background-color: #FFA500; padding: 10px; border-radius: 5px;">
-            <p>Decentraland's native token is MANA, which serves various purposes within the virtual ecosystem.</p>
-            <p>Explore the tokenomics and initial analysis to understand its role in the platform.</p>
-        </div>
-    """,
-        unsafe_allow_html=True,
-    )
     st.markdown(
         """
     
     ### Whitepaper Analysis
     
-    Decentraland is an Ethereum-based virtual ecosystem. It has revolutionized the digital landscape by offering users the ability to buy and sell digital properties, engage in games, trade collectibles, and participate in social interactions within a shared virtual world. Decentraland is Governed by three distinctive tokens – MANA, LAND, and Estate. Decentraland operates on a decentralized model, allowing users to create DAOs through the Argon software on the Ethereum blockchain.
+    Decentraland is an Ethereum-based virtual ecosystem. It has revolutionized the digital landscape by offering users the ability to buy and sell digital properties, engage in games, trade collectibles, and participate in social interactions within a shared virtual world. Decentralanad is goverened by DAO, Decentralized Autonomous Organization that eliminates the need for a central governing agency.
 
-    Originating in 2015 and officially launched in 2017, Decentraland gained prominence in 2021 as the cryptocurrency market and NFTs surged in popularity. The MANA tokens, initially priced at 0.02 USD, saw a substantial increase, reaching values between $6000 and $100,000 per parcel. Notably, major brands like Samsung, Adidas, Atari, and Miller Lite joined the platform, acquiring virtual "properties."
+    Originating in 2015 and officially launched in 2017, Decentraland gained prominence in 2021 as the cryptocurrency market and NFTs surged in popularity. The MANA tokens, initially priced at 0.02 USD, saw a substantial increase, reaching values between 6000 USD and 100,000 USD per parcel. Notably, major brands like Samsung, Adidas, Atari, and Miller Lite joined the platform, acquiring virtual "properties."
     
     Decentraland's architecture revolves around three key concepts: The World, consisting of 3D units called Parcels; The District, formed through DAO voting; and The Marketplace, the hub of Decentraland's economy. The technical aspects involve three layers – Consensus, Assets, and Real-time – ensuring efficient operation of the decentralized virtual space.
     
-    Tokenomics in Decentraland involve two distinct tokens: LAND, necessary for purchasing parcels, and MANA, an ERC20 token serving as a governance token. The project faces competition from platforms like The Sandbox, Rarible, Vault Hill, and Odyssey, each offering unique features within the blockchain and metaverse spaces.
+    Tokenomics in Decentraland involve two distinct tokens: LAND, and MANA, an ERC20 token serving as a governance token. MANA is the native token of the Decentraland ecosystem. It is used to purchase LAND, pay for goods and services within the virtual world and buy items from the marketplace. LAND is a non-fungible token (NFT) that represents a 16m x 16m plot of virtual land(parcels). Estate is a collection of LAND parcels grouped together. 
+    
+    The project faces competition from platforms like The Sandbox, Rarible, Vault Hill, and Odyssey, each offering unique features within the blockchain and metaverse spaces.
 
     *Source: [Decentraland Whitepaper](https://decentraland.org/whitepaper.pdf)*
     """
@@ -96,25 +34,203 @@ with st.container():
 
 # Section 3: Price-related Analysis
 with st.container():
-    st.header("3. Price-related Analysis")
-    df = fetch_data("decentraland")
-    df.index = pd.to_datetime(df.index, unit="ms")
-    st.line_chart(df)
-
-    # Additional analysis or features can be added here
-    st.write(
+    st.header("2. MANA Token Price Analysis")
+    
+    st.subheader("Overview")
+    st.markdown(
         """
-    Explore additional price-related analysis or features in this section.
-    You can analyze trends, identify key events, or present other relevant insights.
-    """
+        This section contains the in-depth analysis of the price of Decentraland MANA token in USD all the way since it's inception in 2017 to December 2023. 
+
+        This analysis is divided into three parts for better understanding of the long term and short term trends:
+        - __Historical Price Analysis:__ This section contains the analysis of the price of the token from 28th October 2017 to 12th December 2023. 
+        - __Last 3 Years Price Analysis:__ This section contains the analysis of the price of the token from 3rd January 2021 to 12th December 2023. 
+        - __2023 Price Analysis:__ This section contains the analysis of the price of the token in 2023 till 12th December.
+
+        The data sources for the analysis are:
+        - [CoinMarketCap](https://coinmarketcap.com/currencies/decentraland/historical-data/)
+        - [Coingecko](https://https://www.coingecko.com/en/coins/decentraland/historical_data#panel)
+
+        Before diving deep into the analysis, let us first understand some terms and concepts related to the price of the token.
+
+        - __Open Price:__ The price of the token at the start of the day. *(in USD)*
+        - __Close Price:__ The price of one unit of token at the end of the day. *(in USD)*
+        - __Market Cap:__ The market capitalization of one unit of token at the end of the day. *(Price of one share * Number of shares)* *(in USD)*
+        - __Volume:__ The trading volume of one unit of token at the end of the day.
+        - __High Price:__ The highest price of one unit of token in the day. *(in USD)*
+        - __Low Price:__ The lowest price of one unit of token in the day. *(in USD)*
+        - __Range:__ The difference between the highest and lowest price of the token in the day. *(High Price - Low Price)* *(in USD)*
+        - __Difference:__ The difference between the close and open price of the token in the day. The higher the difference indicates higher the growth of the price of the token on that particular day. *(Close Price - Open Price)* *(in USD)*
+        - __High Time:__ The time of the day when the price of the token was the highest. *(in PST)*
+        - __Low Time:__ The time of the day when the price of the token was the lowest. *(in PST)* 
+        - __Moving Average:__ The Moving Average of the token. *(Average of the prices of the token in the last 20 days)*
+        """)
+        # - __Close Ratio:__ The ratio of the closing price to the highest price of the token in the day. *(Close Price / High Price)*
+        # - __Price To Metcalf Ratio__: The ratio of the price of the token to the Metcalf's law value of the token. *(Price / Metcalf's law value)*
+        # - __Metcalf's Law Value__: The Metcalf's law value of the token. *(Market Cap / Number of users)*
+        # - __Boilinger Band:__ The Boilinger Band of the token. *(Moving Average + 2 * Standard Deviation)*
+    st.markdown("---")
+    st.subheader("Historical Price Analysis")
+
+    st.markdown(
+        """
+        #### Initial Analysis
+        The following plot shows the price of a unit of token, the market cap and the trading volume of the MANA token.
+        """
     )
+    image_path = "Images/mana_historic_price.png"
+    image = Image.open(image_path)
+    st.markdown('**Historic Trends Visualization**')
+    st.image(image)
+
+    st.markdown(""" **Comments on the plot:** """)
+    st.markdown("""
+            - The standout inference from the plot is the huge increase in the price of the token in the last quarter of 2021. This was due to the announcement of the __Metaverse__ by Facebook on 28th October 2021. A report on 1st of November 2021 by [Blockchain.news](https://blockchain.news/news/metaverses-mana-token-price-leaps-after-facebook-rebrand-to-meta) states "the price of a MANA token, which can be used in a metaverse leapt 164 percent in 12 hours."
+            - The sudden metaverse frenzy brought a short lived spike in the price and market cap of the token, and rather much shorter lived spike in the total volume of the token.
+                """)
+    
+    st.markdown(""" --- """)
+    st.markdown(
+        """
+        ### Year-Wise Price Development 
+
+        The following plots show the price development of the MANA token in each year since its inception in 2017. The prices have been normalized on a scale of 0 to 1 for better comparison minimizing the effect of varied mean prices through the years.
+""")
+    
+    col1, col2 = st.columns(2)
+    col1.markdown("**Price Development in 2017|20|21**")
+    col2.markdown("**Price Development in 2018|19|22|23**")
+    image_path = "Images/mana_norm_price_dev_20_21.png"
+    image = Image.open(image_path)
+    col1.image(image)
+    image_path = "Images/mana_norm_price_dev_18_19_22_23.png"
+    image = Image.open(image_path)
+    col2.image(image)
+    col1.markdown("**Using 20-Day MVA**")
+    col2.markdown("**Using 20-Day MVA**")
+    image_path = "Images/mana_norm_price_dev_20_21_smooth.png"
+    image = Image.open(image_path)
+    col1.image(image)
+    image_path = "Images/mana_norm_price_dev_18_19_22_23_smooth.png"
+    image = Image.open(image_path)
+    col2.image(image)
+    col1.markdown("**Inference and Comments**")
+    col1.markdown("""
+                  - The price of the token has remained nearly constant in the first half of each of the years.
+                  - The price of the token has seen a sudden spike in the second half of each of the years.
+                  - The 2017 spike was due to the **early sale of the token**.
+                  - The first minor peak in February 2020 occured just after **Decentraland went public and set up the DAO.**
+                  - As per Report in [Nonfungible.com](https://https://nonfungible.com/news/metaverse/discovery-of-decentraland) the peak was short lived due to the pandemic related lockdowns, but it grabbed pace again in the second half of the year because "**Decentraland stepped up its collaborations with the arts sector**"
+                  - The 2021 spike was due to the announcement of the __Metaverse__ by Facebook on 28th October 2021.
+        """)
+    col2.markdown("**Inference and Comments**")
+    col2.markdown("""
+        - The price of the token has overall shown a downward trend in the years 2018, 2019, 2022 and 2023.
+        - In April 2018 the price of the token saw a sudden rise. [Nonfungible.com](https://https://nonfungible.com/news/metaverse/discovery-of-decentraland) states that "the developers announced on April 23rd the **release of the SDK (development kit) alpha to start building and modeling scenes according to their wishes."** This led to the sudden rise in the price of the token.
+        - The year 2022 is often called the **"crypto winter"**. The price of the token has seen a downward trend in the year 2022. This is due to the fact that the crypto market was in a bear run in the year 2022.
+        - The steady rise and thereafter stability of the price in the first half of 2019 was due to the fact that Decentraland released the **"Drag and Drop Builder"** allowing an increased user base.
+    """)
+    
+    st.markdown("---")
+    st.subheader("Token Price Variables Analysis for the past 3 years")
+    st.markdown(
+        """
+        Here we identify the correlation between the various price related variables present in the data.
+        """
+    )
+    image_path = "Images/mana_correlation_3_year.png"
+    st.markdown('**Correlation Visualization**')
+    image = Image.open(image_path)
+    st.image(image)
+
+    st.markdown(
+        """
+        - In the correlation plot above, we can use these rules to get an idea of the interdependence between various currencies:
+            - Darker colors indicate stronger correlations, while lighter colors indicate weaker correlations.
+            - Positive correlations (when one variable increases, the other variable tends to increase) represented by warm colors.
+            - Negative correlations (when one variable increases, the other variable tends to decrease) represented by cool colors.
+        - High positive correlation is seen among price related variables the following variables:
+            - Open price, Close price, High price, Low price, Market Cap
+        - Interestingly Volume is not that strongly correlated with them. It's correlation is around 0.5. This indicates that the **price** of the token is **not very dependent on the trading volume** of the token.
+        - There is a **high positive correlation** between **volume and range**. This indicates that the higher the trading volume, the higher the range of the price of the token might be for a given day.
+        """
+    )
+
+    
+    st.markdown("---")
+    st.subheader("Token Price Variables Analysis for 2023")
+
+    st.markdown("""We have seen the correlation between various price related variables for the past 3 years. Now, let us see the correlation between various price related variables for the year 2023. Along with this we will also analyze the correlation between the High Time and the Low Time of the token price for the year 2023.""")
+
+    col1, col2 = st.columns(2)
+    col1.markdown("**Correlation among price related variables**")
+    col2.markdown("**Correlation between High Time and Low Time**")
+    image_path = "Images/mana_correlation_1_2023.png"
+    image = Image.open(image_path)
+    col1.image(image)
+    image_path = "Images/mana_correlation_time_2023.png"
+    image = Image.open(image_path)
+    col2.image(image)
+
+    col1.markdown("""
+        - The correlation among price related variables is very similar to that of the past 3 years.
+                  """)
+    col2.markdown("""
+        - The correlation between the High Time and the Low Time is -0.43. This indicates that the **time of the day** when the price of the token is **highest** is **inversly dependent** on the time of the day when the price of the token is **lowest**. This is an interesting observation. This would also mean that the **erratic nature** of the price of the token is **not very high.** This indicates that the hourly(or minute by minute) volatility is not very high.
+                  """)
+
+    st.markdown("---")
+    st.subheader("Do the Day of the Week Affect the Price of the Token?")
+
+    st.markdown("""
+    An interesting aspect of token price fluctuations is the weekly price trend. 
+    The following plots show the distribution of the top 10 extreme differences in the daily price(close - open) of the MANA token for the past 3 years and that of 2023. Incase of the same day having multiple entries in the top 10 extreme difference list we stack them together.  
+    """)
+
+    col1, col2 = st.columns(2)
+    col1.markdown(""" **Result for top 10 extreme difference in past 3 years** """)
+    col2.markdown(""" **Result for top 10 extrem difference in 2023** """)
+    image_path = "Images/top_10_dates_3_year.png"
+    image = Image.open(image_path)
+    col1.image(image)
+    image_path = "Images/top_10_dates_2023.png"
+    image = Image.open(image_path)
+    col2.image(image)
+
+    col1.markdown("""
+        - The Facebook to Meta announcement on 28th October plays the dominant role. Creating the **largest extreme difference on Friday Saturday, 30th October 2021**. The scale of the reaction(rise of **2.7 USD in two days**) to this announcement also skews the distribution of the extreme differences in the past 3 years.
+        - The consecuent day of Sunday, 31st October 2021 saw a repurcussive reaction to the meteoric growth with an **extreme lower difference of -0.6 USD.**
+                """)
+    
+    col2.markdown("""
+        - There are a numebr of interesting observations here.
+        - **Friday** has the **highest number and magnitude of high extreme difference.** While it does not have even a single entry in the top 10 lowest differences.
+        - There is a **steady increase in the contribution to the highest highs of the token as we move through the week.** This is inline with the statement at [CorporateFinanceInstitute](https://corporatefinanceinstitute.com/resources/cryptocurrency/best-time-to-buy-cryptocurrency/) that states, "Generally, cryptocurrency prices start low on Monday and rise throughout the week. When the weekend hits, prices tend to drop until market activity begins the following Monday." 
+        - It would be conclusive to infer that beginning of the week, Monday(also Sunday), is the best time to buy the token. While Friday might just be the best time to sell the token.
+        """)
+    
+    st.markdown("---")
+    st.subheader("Is there a particular time of the day when the price of the token is highest or lowest?")
+
+    st.markdown("""
+        The following scatter plot shows the distribution of the High Time and the Low Time with respect to the time (normalized for 0 to 24) and the day of the year 2023. The larger the size of the dot, the higher the high at the high time. Similarly, the larger the size of the dot, the lower the low at the low time.
+""")
+    image_path = "Images/Daily_Extreme_Value.png"
+    image = Image.open(image_path)
+    st.image(image)
+
+    st.markdown("""
+        - The distribution tends to be more concentrated towards the midnight hours of PST time. Given that both High time and low time occur more frequently in the midnight hours, it is safe to assume that the price of the token is more volatile in the midnight hours.
+        - This volatility often tends to be so high that they contribute the the highest highs and the lowest lows of the token price of that day.
+            
+""")
+    st.markdown("---")
 
 # Section 4: Competition Analysis
 with st.container():
-    st.header("4. Market Competition Analysis")
+    st.header("3. Market Competition Analysis")
     # df = display_multiple_plots()
     # df.index = pd.to_datetime(df.index, unit="ms")
-    st.line_chart(df)
+    # st.line_chart(df)
 
     # Additional analysis or features can be added here
     st.write(
@@ -188,12 +304,7 @@ with st.container():
     st.image(image_cap)
     st.markdown(
         """
-        - In the correlation plot above, we can use these rules to get an idea of the interdependence between various currencies:
-            - Darker colors indicate stronger correlations, while lighter colors indicate weaker correlations.
-            - Positive correlations (when one variable increases, the other variable tends to increase) represented by warm colors.
-            - Negative correlations (when one variable increases, the other variable tends to decrease) represented by cool colors.
-        
-        
+
         - From the correlation plot, we observe that the correlation between MANA and SAND is __0.94__ which is very high. This is due to the fact that both the tokens have similar use-case and are direct competitors.
         
         - Except for Theta Network, all the other tokens have a correlation of more than __0.8__ with MANA. This is due to the fact that all the tokens are competitors and have similar use-case.
@@ -433,7 +544,7 @@ with st.container():
 
 # Section 5: Social Media Analysis
 with st.container():
-    st.header("5. Social Media Analysis")
+    st.header("4. Current Social Media Sentiment and Conclusion")
     # Additional analysis or features can be added here
     st.markdown(
         """
@@ -441,12 +552,31 @@ with st.container():
     
     According to _Coinbase_
     - 152 individuals are sharing 157 posts about Decentraland MANA on Twitter and Reddit combined in last 24 hours.
-    - It ranks 232 in terms of the mentions and activity on Twitter.
+    - It ranks 213 in terms of the mentions and activity on Twitter(among Cryptocurrencies).
     - Based on 220 tweets about Decentraland MANA:
-        - 5.45 show bullish sentiment
-        - 10.45 show bearish sentiment
-        - 84.09 show neutral sentiment
-        
-    *Source: [Coinbase](https://www.coinbase.com/price/decentraland#SocialMediaMetricsSection)*
+        - 5.45 percent bullish sentiment
+        - 10.45 percent show bearish sentiment
+        - 84.09 spercent show neutral sentiment
+
+    According to _GFGI.IO_
+
+    It identifies the performance of the token based on it's Fear and Greed Index. 
+
+    - The Fear and Greed Index of Decentraland MANA is 59 percent which is in the range of Neutral.
+    - Their AI based investment suggestion suggests to hold the token.
+
+
+    The above data were recorded as of 4:00 AM IST on 16st December 2021.
+    
+    *Source:*
+    [Coinbase](https://www.coinbase.com/price/decentraland#SocialMediaMetricsSection)
+    [GFGI.IO](https://cfgi.io/mana-fear-greed-index/1d?z=1#details)
     """
     )
+    st.markdown("---")
+
+    st.markdown("**Conclusion**")
+    st.markdown(
+        """
+        This report is an exhaustive study on the price variation of the Decentraland MANA token. Correlations between various price related variables have been studied. The price development of the token has been studied for the past 3 years. In depth analysis of the data has been done to identify annual, weekly and daily trends in the price of the token. It has been compared with its competitors. Lastly, the social media sentiment analysis has been presented to understand the current market sentiment towards the token.
+        """)
