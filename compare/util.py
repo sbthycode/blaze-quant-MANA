@@ -19,60 +19,88 @@ tokens = {
         "file_path": "raw_data\Internet Computer_12_13_2019-12_14_2023_historical_data_coinmarketcap.csv",
     },
     "stacks": {
-        "include": True,
+        "include": False,
         "symbol": "STX",
         "name": "Stacks",
         "ranknow": 50,
         "file_path": "raw_data\Stacks_12_13_2019-12_14_2023_historical_data_coinmarketcap.csv",
     },
     "decentraland": {
-        "include": True,
+        "include": False,
         "symbol": "MANA",
         "name": "Decentraland",
         "ranknow": 67,
         "file_path": "raw_data\Decentraland_12_12_2019-12_13_2023_historical_data_coinmarketcap.csv",
     },
     "theta-network": {
-        "include": True,
+        "include": False,
         "symbol": "THETA",
         "name": "Theta Network",
         "ranknow": 61,
         "file_path": "raw_data\Theta Network_12_13_2019-12_14_2023_historical_data_coinmarketcap.csv",
     },
     "axie-infinity": {
-        "include": True,
+        "include": False,
         "symbol": "AXS",
         "name": "Axie Infinity",
         "ranknow": 66,
         "file_path": "raw_data\Axie Infinity_12_13_2019-12_14_2023_historical_data_coinmarketcap.csv",
     },
     "the-sandbox": {
-        "include": True,
+        "include": False,
         "symbol": "SAND",
         "name": "The Sandbox",
         "ranknow": 62,
         "file_path": "raw_data\The Sandbox_12_13_2019-12_14_2023_historical_data_coinmarketcap.csv",
     },
     "bitcoin": {
-        "include": False,
+        "include": True,
         "symbol": "BTC",
         "name": "Bitcoin",
         "ranknow": 1,
-        "file_path": "raw_data\Bitcoin_12_12_2019-12_13_2023_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\Bitcoin_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
     },
     "ethereum": {
-        "include": False,
+        "include": True,
         "symbol": "ETH",
         "name": "Ethereum",
         "ranknow": 2,
-        "file_path": "raw_data\Ethereum_12_12_2019-12_13_2023_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\Ethereum_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
     },
     "illuvium": {
-        "include": True,
+        "include": False,
         "symbol": "ILV",
         "name": "Illuvium",
         "ranknow": 124,
         "file_path": "raw_data\Illuvium_12_13_2019-12_14_2023_historical_data_coinmarketcap.csv",
+    },
+    "solana": {
+        "include": True,
+        "symbol": "SOL",
+        "name": "Solana",
+        "ranknow": 5,
+        "file_path": "raw_data\Solana_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+    },
+    "bnb": {
+        "include": True,
+        "symbol": "BNB",
+        "name": "BNB",
+        "ranknow": 4,
+        "file_path": "raw_data\BNB_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+    },
+    "avalanche": {
+        "include": True,
+        "symbol": "AVAX",
+        "name": "Avalanche",
+        "ranknow": 9,
+        "file_path": "raw_data\Avalanche_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+    },
+    "chainlink": {
+        "include": True,
+        "symbol": "LINK",
+        "name": "Chainlink",
+        "ranknow": 13,
+        "file_path": "raw_data\Ethereum_12_12_2019-12_13_2023_historical_data_coinmarketcap.csv",
     },
 }
 
@@ -129,4 +157,4 @@ for k, v in tokens.items():
 combined_df = pd.concat(all_dfs, ignore_index=True)
 
 # Save the combined DataFrame to a CSV file
-combined_df.to_csv("modified\imp6_comparison_data.csv", index=False)
+combined_df.to_csv("modified\imp5_comparison_data.csv", index=False)
