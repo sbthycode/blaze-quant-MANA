@@ -58,14 +58,14 @@ tokens = {
         "symbol": "BTC",
         "name": "Bitcoin",
         "ranknow": 1,
-        "file_path": "raw_data\Bitcoin_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\Bitcoin_12_31_2020-1_14_2024_historical_data_coinmarketcap.csv",
     },
     "ethereum": {
         "include": True,
         "symbol": "ETH",
         "name": "Ethereum",
         "ranknow": 2,
-        "file_path": "raw_data\Ethereum_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\Ethereum_12_31_2020-1_14_2024_historical_data_coinmarketcap.csv",
     },
     "illuvium": {
         "include": False,
@@ -79,28 +79,35 @@ tokens = {
         "symbol": "SOL",
         "name": "Solana",
         "ranknow": 5,
-        "file_path": "raw_data\Solana_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\Solana_12_31_2020-1_14_2024_historical_data_coinmarketcap.csv",
     },
     "bnb": {
         "include": True,
         "symbol": "BNB",
         "name": "BNB",
         "ranknow": 4,
-        "file_path": "raw_data\BNB_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\BNB_12_31_2020-1_14_2024_historical_data_coinmarketcap.csv",
     },
     "avalanche": {
         "include": True,
         "symbol": "AVAX",
         "name": "Avalanche",
         "ranknow": 9,
-        "file_path": "raw_data\Avalanche_1_14_2020-1_15_2024_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\Avalanche_12_31_2020-1_14_2024_historical_data_coinmarketcap.csv",
     },
     "chainlink": {
         "include": True,
         "symbol": "LINK",
         "name": "Chainlink",
         "ranknow": 13,
-        "file_path": "raw_data\Ethereum_12_12_2019-12_13_2023_historical_data_coinmarketcap.csv",
+        "file_path": "raw_data\Chainlink_12_31_2020-1_14_2024_historical_data_coinmarketcap.csv",
+    },
+    "cardano": {
+        "include": True,
+        "symbol": "ADA",
+        "name": "Cardano",
+        "ranknow": 8,
+        "file_path": "raw_data\Cardano_12_31_2020-1_14_2024_historical_data_coinmarketcap.csv",
     },
 }
 
@@ -157,4 +164,4 @@ for k, v in tokens.items():
 combined_df = pd.concat(all_dfs, ignore_index=True)
 
 # Save the combined DataFrame to a CSV file
-combined_df.to_csv("modified\imp5_comparison_data.csv", index=False)
+combined_df.to_csv("modified\imp6_v3_comparison_data.csv", index=False)
