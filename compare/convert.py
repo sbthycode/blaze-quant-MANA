@@ -10,6 +10,7 @@ files = [
     "eth_raw_data/Ethereum_1_1_2021-12_31_2021_historical_data_coinmarketcap.csv",
     "eth_raw_data/Ethereum_1_1_2022-12_31_2022_historical_data_coinmarketcap.csv",
     "eth_raw_data/Ethereum_1_1_2023-12_27_2023_historical_data_coinmarketcap.csv",
+    "eth_raw_data/Ethereum_12_27_2023-1_31_2024_historical_data_coinmarketcap.csv",
 ]
 
 dfs = []
